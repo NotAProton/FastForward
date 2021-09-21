@@ -1,0 +1,44 @@
+name: Package
+
+on: pull_request
+
+  workflow_dispatch:
+
+
+jobs:
+  Chromium:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # pulls all commits (needed for commits to version)
+          fetch-depth: 0
+      
+      - name: Make package
+        run: bash scripts/chromium.sh
+
+      - name: Upload Package Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: FastForward_chromium
+          path: build/dist
+          if-no-files-found: error
+
+  Firefox:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      
+      - name: Make package
+        run: bash scripts/firefox.sh
+
+      - name: Upload Package Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: FastForward_firefox
+          path: build/dist
+          if-no-files-found: error
