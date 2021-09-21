@@ -1,9 +1,6 @@
-name: Package
+name: Pull_req
 
 on: pull_request
-
-  workflow_dispatch:
-
 
 jobs:
   Chromium:
