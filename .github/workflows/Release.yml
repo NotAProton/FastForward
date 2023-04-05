@@ -30,4 +30,4 @@ jobs:
       - name: Release
         run: |
           export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          hub release create -a "./build/dist/*firefox.xpi#Firefox" -a "./build/dist/chromium.crx#Chrome" -m "Release ${{ github.event.inputs.version }}" ${{ github.event.inputs.version }}
+          hub release create -a "./build/dist/FastForward_${{ github.event.inputs.version }}_firefox.xpi#Firefox" -a "./build/dist/FastForward_${{ github.event.inputs.version }}_chromium.crx#Chrome" -m "Release ${{ github.event.inputs.version }}" ${{ github.event.inputs.version }}
