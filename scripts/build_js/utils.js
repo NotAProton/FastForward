@@ -47,6 +47,40 @@ export async function copyArray(src, dest, exceptions = []) {
   }
 }
 
+/**
+ * Parses the command line arguments and returns the browser, version, and dev flag.
+ * @param {string[]} args - The command line arguments.
+ * @returns {Array} - An array containing the browser, version, and dev flag.
+ */
+export function parseArguments(args) {
+  let dev = false;
+  for (let i = 0; i < args.length; i++) {
+    console.log(args[i]);
+    if (args[i] === '--dev') {
+      args.splice(i, 1);
+      dev = true;
+    }
+  }
+  let [browser, version] = args;
+  if (!['firefox', 'chromium', 'all'].includes(browser)) {
+    console.error(
+      'Invalid browser argument. Must be "firefox", "chromium" or "all".'
+    );
+    process.exit(1);
+  }
+  if (version) {
+    if (!['nover', 'ver'].includes(version)) {
+      console.error(
+        'Invalid version argument. Must be "nover", "ver" or none.'
+      );
+      process.exit(1);
+    }
+  } else {
+    version = 'nover';
+  }
+  return [browser, version, dev];
+}
+
 export function changeCwdtoRoot() {
   if (fs.existsSync(path.join(process.cwd(), 'LICENSE'))) {
     console.log(`LICENSE file found in ${process.cwd()}`);
